@@ -170,11 +170,34 @@ const Problem70 = (m) =>{
 
 // Problem 71:By listing the set of reduced proper fractions for d <= 1000000(in general d <= m)
 // in ascending order of size, find the numerator of the fraction immediately to the left of 3/7
+// (in general to the left of a/b)
  
 
-const Problem71 = (m) =>{
+const Problem71 = (m, a, b) =>{
+    const target = a/b;
+    let output = 0;
+    let numerator = 0;
+    // loop through i = 2,3,4,...,m
+    // find all x1, x2, ... ,xn coprime to i
+    // pick j such that xj/i < target and j is maximal
+    // if xj/i > output, numerator = xj
 
+    for (i = 2; i <= m; i++){
+        let largestCoprime = 1;
+        for (j = 2; j < target*i ; j++){
+            if (gcd(i,j) === 1){
+                largestCoprime = j;
+            }
+            if (largestCoprime/i > output){
+                output = largestCoprime/i;
+                numerator = largestCoprime;
+            }
+        }
+    }
+    return [numerator, numerator/output];
 }
+
+console.log(Problem71(1000000,3,7));
 
 
 // Problem 72: How many elements would be contained in the set of reduced proper fractions for 
@@ -189,4 +212,4 @@ const Problem72 = (m) => {
     return total;
 }
 
-console.log(Problem72(1000000));
+// console.log(Problem72(1000000));
