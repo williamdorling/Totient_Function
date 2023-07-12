@@ -1,1 +1,2 @@
 # Totient_Function
+My solutions to problems 69-73 on Project Euler (https://projecteuler.net/archives;page=2) regarding Euler's totient function (https://en.wikipedia.org/wiki/Euler%27s_totient_function)
