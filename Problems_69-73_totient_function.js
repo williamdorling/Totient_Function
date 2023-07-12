@@ -225,7 +225,7 @@ const Problem71 = (m,a,b) => {
     return [numerator, numerator/output];
 }
 
-console.log(Problem71(1000000,3,7)[0]);
+// console.log(Problem71(1000000,3,7)[0]);
 
 
 // Problem 72: How many elements would be contained in the set of reduced proper fractions for 
@@ -241,3 +241,33 @@ const Problem72 = (m) => {
 }
 
 // console.log(Problem72(1000000));
+
+
+// Problem 73: How many fractions lie between 1/3 (in general a1/b1) and 
+// 1/2 (in general a2/b2) in the sorted set of reduced proper fractions 
+// for d<=12000 (in general d <= m)?
+
+
+// takes in fractions a1/b1 and a2/b2 and returns mediant (a1+a2)/(b1+b2) 
+const mediant = (a1,b1,a2,b2) => {
+    let numerator = a1 + a2;
+    let denominator = b1 + b2;
+    const hcf = gcd(numerator,denominator);
+    numerator /= hcf;
+    denominator /= hcf;
+    return [Math.round(numerator), Math.round(denominator)];
+}
+
+const Problem73 = (a1,b1,a2,b2,m) => {
+    let min;
+    let max;
+    if (a1/b1 < a2/b2){
+        min = a1/b1;
+        max = a2/b2;
+    }
+    else {
+        min = a2/b2;
+        max = a1/b1;
+    }
+
+}
