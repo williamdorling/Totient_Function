@@ -173,7 +173,7 @@ const Problem70 = (m) =>{
 // (in general to the left of a/b)
  
 
-const Problem71 = (m, a, b) =>{
+const Problem71Naive = (m, a, b) =>{
     const target = a/b;
     let output = 0;
     let numerator = 0;
@@ -197,7 +197,35 @@ const Problem71 = (m, a, b) =>{
     return [numerator, numerator/output];
 }
 
-console.log(Problem71(1000000,3,7));
+// return greatest reduced proper fraction < a/b, with maximum denominator m.
+const Problem71 = (m,a,b) => {
+    const target = a/b;
+    let output = 0;
+    let numerator = 0;
+    const start = Math.ceil(b/a);
+    for (i = start; i <= m; i++){
+        if(i === b){
+            continue;
+        }
+        let largestCoprime = 0;
+        let nextCheck = Math.floor(target*i);
+        while (largestCoprime === 0){
+            if (gcd(nextCheck, i) === 1){
+                largestCoprime = nextCheck;
+                if (largestCoprime/i > output){
+                    output = largestCoprime/i;
+                    numerator = largestCoprime;
+                }
+            }
+            else {
+                nextCheck -= 1;
+            }
+        }
+    }
+    return [numerator, numerator/output];
+}
+
+console.log(Problem71(1000000,3,7)[0]);
 
 
 // Problem 72: How many elements would be contained in the set of reduced proper fractions for 
