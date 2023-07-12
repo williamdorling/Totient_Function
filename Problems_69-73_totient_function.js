@@ -163,4 +163,30 @@ const Problem70 = (m) =>{
     return output;
 }
 
-console.log(Problem70(10000000));
+// console.log(Problem70(10000000));
+
+// Consider the fraction, n/d , where n and d are positive integers. If n<d and HCF(n,d)=1,
+// it is called a reduced proper fraction.
+
+// Problem 71:By listing the set of reduced proper fractions for d <= 1000000(in general d <= m)
+// in ascending order of size, find the numerator of the fraction immediately to the left of 3/7
+ 
+
+const Problem71 = (m) =>{
+
+}
+
+
+// Problem 72: How many elements would be contained in the set of reduced proper fractions for 
+// d <= 1000000 (in general d <= m)?
+ 
+
+const Problem72 = (m) => {
+    let total = 0
+    for (n = 2; n<=m; n++){
+        total += phi(n)
+    }
+    return total;
+}
+
+console.log(Problem72(1000000));
