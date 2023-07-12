@@ -12,6 +12,34 @@ const gcd = (a,b) => {
     return gcd(b, a%b);
 }
 
+// returns the prime divisors of an integer n
+const primeDivisors = (n) => {
+
+    let divisors = [];
+
+    // if multiple of 2 divide out by 2 until odd
+    while (n % 2 === 0){
+        divisors.push(2);
+        n /= 2;
+    }
+
+    // loop through 3,5,7, ... , sqrt(n), do the same as above for each
+    for (i=3; i <= Math.sqrt(n); i = i+2){
+        while (n % i === 0){
+            divisors.push(i);
+            n /= i;
+        }
+    }
+
+    // if divisors is still empty, then n must be prime
+    if (divisors.length === 0){
+        divisors.push(n);
+    }
+
+    return divisors;
+
+}
+
 // returns the number of positive integers <= n which are coprime to n.
 const phi = (n) => {
     let totient = 0;
@@ -36,4 +64,4 @@ const Problem69 = (m) =>{
     return output;
 }
 
-console.log(Problem69(1000000));
+console.log(primeDivisors(1000000));
