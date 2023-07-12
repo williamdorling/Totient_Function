@@ -64,6 +64,8 @@ const uniquePrimeDivisors = (n) => {
     }
 
     // if n is now a prime number >2
+    // this is the case where the largest prime factor of the original n appears
+    // to the power of 1 in the prime factorisation of n
     if (n>2){
         divisors.push(n);
     }
@@ -110,7 +112,36 @@ const Problem69 = (m) =>{
     return output;
 }
 
-console.log(Problem69(1000000));
+// console.log(Problem69(1000000));
 
+
+
+// Problem 70: Interestingly, phi(87109) = 79180, and it can be seen that 
+// 87109 is a permutation of 79180.
+// Find the value of n, 1 < n < 10**7 , for which phi(n) is a permutation of n
+// and the ratio n/phi(n) produces a minimum.
+
+// takes in two positive integers, a and b, and returns whether they are permutations of eachother
+const permutation = (a,b) =>{
+    let stringa = a.toString();
+    let stringb = b.toString();
+
+    if (stringa.length !== stringb.length){
+        return false;
+    }
+
+    // create arrays counting number of occurences of 0,1,...,9
+    let counta = new Array(10).fill(0);
+    let countb = new Array(10).fill(0);
+
+    // increment count of each digit in a and b
+    for ( i = 0; i < stringa.length; i++) {
+        counta[parseInt(stringa.charAt(i))] += 1;
+        countb[parseInt(stringb.charAt(i))] += 1;
+    }
+
+    return countb.toString() === counta.toString();
+
+}
 
 
