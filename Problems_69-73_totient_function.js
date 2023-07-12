@@ -118,7 +118,7 @@ const Problem69 = (m) =>{
 
 // Problem 70: Interestingly, phi(87109) = 79180, and it can be seen that 
 // 87109 is a permutation of 79180.
-// Find the value of n, 1 < n < 10**7 , for which phi(n) is a permutation of n
+// Find the value of n, 1 < n < 10**7 (in general n <m), for which phi(n) is a permutation of n
 // and the ratio n/phi(n) produces a minimum.
 
 // takes in two positive integers, a and b, and returns whether they are permutations of eachother
@@ -145,3 +145,22 @@ const permutation = (a,b) =>{
 }
 
 
+const Problem70 = (m) =>{
+    let output = 0;
+    let check = m;
+    for (n = 2; n <= m; n++){
+        const totient = phi(n);
+        if (permutation(n, totient)){
+            const totientCheck = n / totient;
+            if (totientCheck < check ){
+                [output, check] = [n, totientCheck]
+            }
+        }
+    }
+    if (output === 0){
+        return "no n found with phi(n) a permutation of n"
+    }
+    return output;
+}
+
+console.log(Problem70(10000000));
