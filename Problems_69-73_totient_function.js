@@ -222,7 +222,7 @@ const Problem71 = (m,a,b) => {
             }
         }
     }
-    return [numerator, numerator/output];
+    return [numerator, Math.round(numerator/output)];
 }
 
 // console.log(Problem71(1000000,3,7)[0]);
@@ -259,15 +259,34 @@ const mediant = (a1,b1,a2,b2) => {
 }
 
 const Problem73 = (a1,b1,a2,b2,m) => {
-    let min;
-    let max;
+    let minFraction;
+    let maxFraction;
     if (a1/b1 < a2/b2){
-        min = a1/b1;
-        max = a2/b2;
+        minFraction = [a1,b1];
+        maxFraction = [a2,b2];
     }
     else {
-        min = a2/b2;
-        max = a1/b1;
+        minFraction = [a2,b2];
+        maxFraction = [a1,b1];
+    }
+    // console.log("minFraction", minFraction);
+    // console.log("maxFraction", maxFraction);
+    const minValue = minFraction[0]/minFraction[1];
+    // console.log("minValue",minValue);
+    const maxValue = maxFraction[0]/maxFraction[1];
+
+    let count = -1;
+    let nextFraction = maxFraction;
+
+    while(nextFraction[0]/nextFraction[1] > minValue){
+        nextFraction = Problem71(m,nextFraction[0],nextFraction[1]);
+        // console.log(nextFraction);
+        count++;
     }
 
+    return count;
 }
+
+console.log(Problem73(1,3,1,2,1000));
+
+// console.log(Problem71(8,3,8));
