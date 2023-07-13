@@ -273,12 +273,8 @@ const fractionList = (m) => {
     while (fractions.length < listLength*2){
         for (i=0; i< fractions.length-2; i=i+2){
             const nextFrac = mediant(fractions[i],fractions[i+1],fractions[i+2],fractions[i+3]);
-            // console.log(nextFrac);
             if (nextFrac[1] <= m ){
-                // console.log(fractions);
                 fractions.splice(i+2,0,nextFrac[0],nextFrac[1]);
-                // console.log(fractions);
-                // fractions.splice(nextFrac[1],0,i+3);
                 i+=2;
                 
             }
@@ -286,17 +282,17 @@ const fractionList = (m) => {
     }
     fractions.splice(0,2);
     fractions.splice(-2,2);
-    return fractions;
+    return "done " + fractions.length/2;
+    // return fractions;
 }
 
-console.log("fractionList:", fractionList(8));
+// console.log(fractionList(700));
 
 
 
 // Problem 73: How many fractions lie between 1/3 (in general a1/b1) and 
 // 1/2 (in general a2/b2) in the sorted set of reduced proper fractions 
 // for d<=12000 (in general d <= m)?
-
 
 
 
@@ -311,10 +307,7 @@ const Problem73 = (a1,b1,a2,b2,m) => {
         minFraction = [a2,b2];
         maxFraction = [a1,b1];
     }
-    // console.log("minFraction", minFraction);
-    // console.log("maxFraction", maxFraction);
     const minValue = minFraction[0]/minFraction[1];
-    // console.log("minValue",minValue);
     const maxValue = maxFraction[0]/maxFraction[1];
 
     let count = -1;
@@ -322,7 +315,6 @@ const Problem73 = (a1,b1,a2,b2,m) => {
 
     while(nextFraction[0]/nextFraction[1] > minValue){
         nextFraction = Problem71(m,nextFraction[0],nextFraction[1]);
-        // console.log(nextFraction);
         count++;
     }
 
@@ -331,4 +323,63 @@ const Problem73 = (a1,b1,a2,b2,m) => {
 
 // console.log(Problem73(1,3,1,2,1000));
 
-// console.log(Problem71(8,3,8));
+const fractionListBetween = (a1,b1,a2,b2,m) =>{
+    let fractions;
+    if (a1/b1 < a2/b2){
+        fractions = [a1,b1,a2,b2];
+    }
+    else {
+        fractions = [a2,b2,a1,b1];
+    }
+    let additions = -1;
+    while(additions != 0){
+        additions = 0;
+        for (i=0; i< fractions.length-2; i=i+2){
+            const nextFrac = mediant(fractions[i],fractions[i+1],fractions[i+2],fractions[i+3]);
+            if (nextFrac[1] <= m ){
+                fractions.splice(i+2,0,nextFrac[0],nextFrac[1]);
+                i+=2;
+                additions++;  
+            }
+        }
+    }
+    fractions.splice(0,2);
+    fractions.splice(-2,2);
+    return "done " + fractions.length/2;
+    // return fractions;
+}
+
+// console.log(fractionListBetween(1,3,1,2,1000));
+
+const fractionListBetween2 = (a1,b1,a2,b2,m) =>{
+    let fractions;
+    if (a1/b1 < a2/b2){
+        fractions = [a1,b1,a2,b2];
+    }
+    else {
+        fractions = [a2,b2,a1,b1];
+    }
+    let additions = -1;
+    let indicesToLoop = [0];
+    while(additions != 0){
+        additions = 0;
+        let newIndicesToLoop = [];
+        for (i of indicesToLoop){
+            const nextFrac = mediant(fractions[i],fractions[i+1],fractions[i+2],fractions[i+3]);
+            if (nextFrac[1] <= m ){
+                fractions.splice(i+2 ,0 ,nextFrac[0] ,nextFrac[1]);
+                newIndicesToLoop.push(i + additions*2, i + additions*2 + 2); 
+                additions++;
+            }
+        }
+        indicesToLoop = [...newIndicesToLoop];
+        console.log(indicesToLoop);
+        console.log(fractions);
+    }
+    fractions.splice(0,2);
+    fractions.splice(-2,2);
+    return m + " " + fractions.length/2;
+    // return fractions;
+}
+
+console.log(fractionListBetween2(1,3,1,2,8));
