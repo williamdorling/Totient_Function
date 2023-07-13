@@ -225,7 +225,30 @@ const Problem71 = (m,a,b) => {
     return [numerator, Math.round(numerator/output)];
 }
 
-// console.log(Problem71(1000000,3,7)[0]);
+// console.log("First method",Problem71(1000000,3,7));
+
+// takes in fractions a1/b1 and a2/b2 and returns mediant (a1+a2)/(b1+b2) 
+const mediant = (a1,b1,a2,b2) => {
+    let numerator = a1 + a2;
+    let denominator = b1 + b2;
+    const hcf = gcd(numerator,denominator);
+    numerator /= hcf;
+    denominator /= hcf;
+    return [Math.round(numerator), Math.round(denominator)];
+}
+
+
+// const Problem71Refactor = (m,a,b) => {
+//     const target = a/b;
+//     let check = [1,m];
+//     while (check[1] <= m){
+//         check = mediant(check[0],check[1],a,b);
+//         console.log(check);
+//     }
+//     return check;
+// }
+
+// console.log("Second method", Problem71Refactor(8,3,7));
 
 
 // Problem 72: How many elements would be contained in the set of reduced proper fractions for 
@@ -243,20 +266,39 @@ const Problem72 = (m) => {
 // console.log(Problem72(1000000));
 
 
+// returns ordered list of reduced proper fractions with denominator <= m
+const fractionList = (m) => {
+    let fractions = [0,1,1,1]
+    const listLength = Problem72(m)+2;
+    while (fractions.length < listLength*2){
+        for (i=0; i< fractions.length-2; i=i+2){
+            const nextFrac = mediant(fractions[i],fractions[i+1],fractions[i+2],fractions[i+3]);
+            // console.log(nextFrac);
+            if (nextFrac[1] <= m ){
+                // console.log(fractions);
+                fractions.splice(i+2,0,nextFrac[0],nextFrac[1]);
+                // console.log(fractions);
+                // fractions.splice(nextFrac[1],0,i+3);
+                i+=2;
+                
+            }
+        }
+    }
+    fractions.splice(0,2);
+    fractions.splice(-2,2);
+    return fractions;
+}
+
+console.log("fractionList:", fractionList(8));
+
+
+
 // Problem 73: How many fractions lie between 1/3 (in general a1/b1) and 
 // 1/2 (in general a2/b2) in the sorted set of reduced proper fractions 
 // for d<=12000 (in general d <= m)?
 
 
-// takes in fractions a1/b1 and a2/b2 and returns mediant (a1+a2)/(b1+b2) 
-const mediant = (a1,b1,a2,b2) => {
-    let numerator = a1 + a2;
-    let denominator = b1 + b2;
-    const hcf = gcd(numerator,denominator);
-    numerator /= hcf;
-    denominator /= hcf;
-    return [Math.round(numerator), Math.round(denominator)];
-}
+
 
 const Problem73 = (a1,b1,a2,b2,m) => {
     let minFraction;
@@ -287,6 +329,6 @@ const Problem73 = (a1,b1,a2,b2,m) => {
     return count;
 }
 
-console.log(Problem73(1,3,1,2,1000));
+// console.log(Problem73(1,3,1,2,1000));
 
 // console.log(Problem71(8,3,8));
