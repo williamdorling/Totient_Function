@@ -295,7 +295,6 @@ const fractionList = (m) => {
 // for d<=12000 (in general d <= m)?
 
 
-
 const Problem73 = (a1,b1,a2,b2,m) => {
     let minFraction;
     let maxFraction;
@@ -321,7 +320,7 @@ const Problem73 = (a1,b1,a2,b2,m) => {
     return count;
 }
 
-// console.log(Problem73(1,3,1,2,1000));
+// console.log(Problem73(1,3,1,2,12000));
 
 const fractionListBetween = (a1,b1,a2,b2,m) =>{
     let fractions;
@@ -382,4 +381,48 @@ const fractionListBetween2 = (a1,b1,a2,b2,m) =>{
     // return fractions;
 }
 
-console.log(fractionListBetween2(1,3,1,2,8));
+// console.log(fractionListBetween2(1,3,1,2,8));
+
+const mediant2 = (a,b) => {
+    let numerator = a[0] + b[0];
+    let denominator = a[1] + b[1];
+    const hcf = gcd(numerator, denominator);
+    [numerator, denominator] = [Math.round(numerator/hcf), Math.round(denominator/hcf)];
+    return [numerator,denominator];
+}
+
+// console.log(mediant2([1,3],[1,3]));
+
+const fractionListBetween3 = (a,b,m) => {
+    let fractions;
+    if (a[0]/a[1] < b[0]/b[1]){
+        fractions = [a,b];
+    }
+    else {
+        fractions = [b,a];
+    }
+    let additions = -1;
+    let indicesToLoop = [0];
+    while (additions != 0) {
+        additions = 0;
+        let newIndicesToLoop = [];
+        let newFractions = [...fractions];
+        for (i of indicesToLoop){
+            const nextFrac = mediant2(fractions[i], fractions[i+1]);
+            if (nextFrac[1] <= m){
+                newFractions.splice(i+additions+1,0,nextFrac);
+                newIndicesToLoop.push(i+additions, i+additions+1);
+                additions++;
+            }
+        }
+        fractions = [...newFractions];
+        indicesToLoop = [...newIndicesToLoop];
+    }
+    fractions.splice(0,1);
+    fractions.splice(-1,1);
+    return m + " " + fractions.length;
+    // return fractions;
+    
+}
+
+console.log(fractionListBetween3([1,3],[1,2],5000));
