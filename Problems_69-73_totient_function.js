@@ -320,7 +320,7 @@ const Problem73 = (a1,b1,a2,b2,m) => {
     return count;
 }
 
-// console.log(Problem73(1,3,1,2,12000));
+// console.log(Problem73(1,3,1,2,700));
 
 const fractionListBetween = (a1,b1,a2,b2,m) =>{
     let fractions;
@@ -348,7 +348,7 @@ const fractionListBetween = (a1,b1,a2,b2,m) =>{
     // return fractions;
 }
 
-// console.log(fractionListBetween(1,3,1,2,1000));
+// console.log(fractionListBetween(1,3,1,2,700));
 
 const fractionListBetween2 = (a1,b1,a2,b2,m) =>{
     let fractions;
@@ -403,7 +403,8 @@ const fractionListBetween3 = (a,b,m) => {
     }
     let additions = -1;
     let indicesToLoop = [0];
-    while (additions != 0) {
+    // while (additions != 0) {
+    while (indicesToLoop.length > 0) {
         additions = 0;
         let newIndicesToLoop = [];
         let newFractions = [...fractions];
@@ -420,9 +421,9 @@ const fractionListBetween3 = (a,b,m) => {
     }
     fractions.splice(0,1);
     fractions.splice(-1,1);
-    return m + " " + fractions.length;
+    return m + ": " + fractions.length;
     // return fractions;
     
 }
 
-console.log(fractionListBetween3([1,3],[1,2],5000));
+console.log(fractionListBetween3([1,3],[1,2],700));
